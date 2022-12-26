@@ -19,6 +19,13 @@ spec:
             - containerPort: 8080
               name: server
               protocol: TCP
+          env:
+            - name: spring.datasource.url
+              value: jdbc:mysql://primerjalnik-cen-server.mysql.database.azure.com:3306/primerjalnik-cen?useSSL=true
+            - name: spring.datasource.username
+              value: adminRso
+            - name: spring.datasource.password
+              value: Rso2022@
 
 ---
 
