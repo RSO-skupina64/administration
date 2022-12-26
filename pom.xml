@@ -19,6 +19,8 @@
 		<springboot.jpa.version>2.7.5</springboot.jpa.version>
 		<mysql.connector.version>8.0.31</mysql.connector.version>
 		<mapstruct.version>1.4.2.Final</mapstruct.version>
+		<springboot.config.version>3.1.5</springboot.config.version>
+		<spring.cloud.dependencies.version>2021.0.5</spring.cloud.dependencies.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -42,6 +44,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.1.214</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdoc.version}</version>
@@ -58,7 +67,25 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+			<version>${springboot.config.version}</version>
+		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.dependencies.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
