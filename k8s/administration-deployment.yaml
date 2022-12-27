@@ -26,6 +26,18 @@ spec:
               value: adminRso
             - name: spring.datasource.password
               value: Rso2022@
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: server
+            initialDelaySeconds: 20
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: server
+            initialDelaySeconds: 20
+            periodSeconds: 3
 
 ---
 
@@ -36,7 +48,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 8081
+    - port: 8080
       protocol: TCP
       targetPort: server
   selector:
