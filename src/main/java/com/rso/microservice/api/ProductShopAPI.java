@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +21,7 @@ import javax.validation.Valid;
 @RequestMapping("/product-shop/history")
 @Tag(name = "Product Shop History")
 public class ProductShopAPI {
+    private static final Logger log = LoggerFactory.getLogger(ProductShopAPI.class);
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Creates new product history",
@@ -32,7 +35,9 @@ public class ProductShopAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<ProductHistoryWithIdDto> createProductHistory(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody ProductHistoryDto pricesShopRequest) {
+        log.info("createProductHistory: ENTRY");
         // todo: add code here
+        log.info("createProductHistory: EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
@@ -48,7 +53,9 @@ public class ProductShopAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<MessageDto> deleteProductHistory(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody DeleteProductDto pricesShopRequest) {
+        log.info("deleteProductHistory: ENTRY");
         // todo: add code here
+        log.info("deleteProductHistory: EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
@@ -63,7 +70,9 @@ public class ProductShopAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<?> updateProductHistory(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody ProductHistoryWithIdDto pricesShopRequest) {
+        log.info("updateProductHistory: ENTRY");
         // todo: add code here
+        log.info("updateProductHistory: EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 

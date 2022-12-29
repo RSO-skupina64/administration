@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +28,7 @@ import javax.validation.Valid;
         version = "0.1"))
 @Tag(name = "Prices")
 public class PricesAPI {
+    private static final Logger log = LoggerFactory.getLogger(PricesAPI.class);
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Fetches prices for all shops",
@@ -39,7 +42,9 @@ public class PricesAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<MessageDto> fetchProductPrices(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt) {
+        log.info("fetchProductPrices: ENTRY");
         // todo: add code here
+        log.info("fetchProductPrices: EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
@@ -55,7 +60,9 @@ public class PricesAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<MessageDto> fetchProductPricesSpecificShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody PricesShopRequestDto pricesShopRequest) {
+        log.info("fetchProductPricesSpecificShop: ENTRY");
         // todo: add code here
+        log.info("fetchProductPricesSpecificShop: EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 

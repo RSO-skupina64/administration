@@ -1,0 +1,11 @@
+<configuration>
+    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${LOGBACK_DESTINATION}</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeMdcKeyName>test</includeMdcKeyName>
+        </encoder>
+    </appender>
+    <root level="info">
+        <appender-ref ref="stash" />
+    </root>
+</configuration>
