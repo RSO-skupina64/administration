@@ -44,6 +44,7 @@ public class HealthAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<MessageDto> changeLiveness() {
+        log.info("changeLiveness: ENTRY");
         log.info(".changeLiveness changing liveness state");
         if (applicationAvailability.getLivenessState().equals(LivenessState.CORRECT)) {
             log.info(".changeLiveness changing to BROKEN");
@@ -53,6 +54,7 @@ public class HealthAPI {
             AvailabilityChangeEvent.publish(applicationContext, LivenessState.CORRECT);
         }
         MessageDto response = new MessageDto("Change successful");
+        log.info("changeLiveness: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -65,6 +67,7 @@ public class HealthAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<MessageDto> changeReadiness() {
+        log.info("changeReadiness: ENTRY");
         log.info(".changeReadiness changing readiness state");
         if (applicationAvailability.getReadinessState().equals(ReadinessState.ACCEPTING_TRAFFIC)) {
             log.info(".changeReadiness changing to REFUSING_TRAFFIC");
@@ -74,6 +77,7 @@ public class HealthAPI {
             AvailabilityChangeEvent.publish(applicationContext, ReadinessState.ACCEPTING_TRAFFIC);
         }
         MessageDto response = new MessageDto("Change successful");
+        log.info("changeReadiness: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
