@@ -27,7 +27,7 @@ public class LoggingFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) servletResponse;
 
         String requestId = req.getHeader("X-Request-Id");
-        if (requestId == null)
+        if (requestId == null || requestId.isBlank())
             requestId = UUID.randomUUID().toString();
 
         MDC.put(Constants.MDC_NAME, "Administration");

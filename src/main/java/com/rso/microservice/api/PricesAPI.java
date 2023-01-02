@@ -2,7 +2,7 @@ package com.rso.microservice.api;
 
 import com.rso.microservice.api.dto.ErrorDto;
 import com.rso.microservice.api.dto.MessageDto;
-import com.rso.microservice.api.dto.PricesShopRequestDto;
+import com.rso.microservice.service.PricesService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -19,8 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 @RequestMapping("/prices")
 @OpenAPIDefinition(info = @Info(title = "Administration API",
@@ -30,7 +28,13 @@ import javax.validation.Valid;
 public class PricesAPI {
     private static final Logger log = LoggerFactory.getLogger(PricesAPI.class);
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    private final PricesService pricesService;
+
+    public PricesAPI(PricesService pricesService) {
+        this.pricesService = pricesService;
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Fetches prices for all shops",
             description = "Fetches prices for all shops")
     @ApiResponses({
@@ -41,14 +45,14 @@ public class PricesAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<MessageDto> fetchProductPrices(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt) {
+    public ResponseEntity<MessageDto> fetchProductPrices(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @RequestHeader(value = "X-Request-Id", required = false) String transactionId) {
         log.info("fetchProductPrices: ENTRY");
-        // todo: add code here
+        String response = pricesService.fetchPrices(jwt);
         log.info("fetchProductPrices: EXIT");
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageDto(response));
     }
 
-    @PostMapping(value = "/shop", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/shop/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Fetches prices for specific shop",
             description = "Fetches prices for specific shop")
     @ApiResponses({
@@ -59,7 +63,7 @@ public class PricesAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<MessageDto> fetchProductPricesSpecificShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody PricesShopRequestDto pricesShopRequest) {
+    public ResponseEntity<MessageDto> fetchProductPricesSpecificShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @PathVariable String id) {
         log.info("fetchProductPricesSpecificShop: ENTRY");
         // todo: add code here
         log.info("fetchProductPricesSpecificShop: EXIT");
