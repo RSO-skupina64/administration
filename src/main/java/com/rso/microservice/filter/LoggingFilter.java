@@ -1,6 +1,6 @@
 package com.rso.microservice.filter;
 
-import com.rso.microservice.util.Constants;
+import com.rso.microservice.util.MDCUtil;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
@@ -30,13 +30,11 @@ public class LoggingFilter implements Filter {
         if (requestId == null || requestId.isBlank())
             requestId = UUID.randomUUID().toString();
 
-        MDC.put(Constants.MDC_NAME, "Administration");
-        MDC.put(Constants.MDC_REQUEST_ID, requestId);
-        MDC.put(Constants.MDC_VERSION, buildProperties.getVersion());
+        MDCUtil.put(MDCUtil.MDCUtilKey.MICROSERVICE_NAME, "Administration");
+        MDCUtil.put(MDCUtil.MDCUtilKey.REQUEST_ID, requestId);
+        MDCUtil.put(MDCUtil.MDCUtilKey.MICROSERVICE_VERSION, buildProperties.getVersion());
         filterChain.doFilter(servletRequest, servletResponse);
-        MDC.remove(Constants.MDC_NAME);
-        MDC.remove(Constants.MDC_REQUEST_ID);
-        MDC.remove(Constants.MDC_VERSION);
+        MDCUtil.clear();
     }
 
 }

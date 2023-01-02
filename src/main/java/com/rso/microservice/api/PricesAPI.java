@@ -45,7 +45,7 @@ public class PricesAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<MessageDto> fetchProductPrices(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @RequestHeader(value = "X-Request-Id", required = false) String transactionId) {
+    public ResponseEntity<MessageDto> fetchProductPrices(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt) {
         log.info("fetchProductPrices: ENTRY");
         String response = pricesService.fetchPrices(jwt);
         log.info("fetchProductPrices: EXIT");
