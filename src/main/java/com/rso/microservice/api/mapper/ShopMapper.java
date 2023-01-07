@@ -4,6 +4,7 @@ import com.rso.microservice.api.dto.ShopDto;
 import com.rso.microservice.api.dto.ShopsArrayResponseDto;
 import com.rso.microservice.entity.Shop;
 import com.rso.microservice.entity.Type;
+import com.rso.microservice.grpc.Shops.ShopGrpc;
 import com.rso.microservice.vao.ShopListVAO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,6 +25,8 @@ public interface ShopMapper {
     @Mapping(source = "name", target = ".")
     String toModel(Type type);
 
+    List<ShopGrpc> toModelGrpc(List<Shop> shops);
 
+    ShopGrpc toModelGrpc(Shop shop);
 
 }
