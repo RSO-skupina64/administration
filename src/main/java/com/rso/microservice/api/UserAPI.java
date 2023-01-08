@@ -37,7 +37,8 @@ public class UserAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<MessageDto> deleteUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody UserIdDto pricesShopRequest) {
+    public ResponseEntity<MessageDto> deleteUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                                 @Valid @RequestBody UserIdDto userId) {
         log.info(".deleteUser ENTRY");
         // todo: add code here
         log.info(".deleteUser EXIT");
@@ -54,7 +55,8 @@ public class UserAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<?> updateUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody UserDto pricesShopRequest) {
+    public ResponseEntity<?> updateUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                        @Valid @RequestBody UserDto user) {
         log.info(".updateUser ENTRY");
         // todo: add code here
         log.info(".updateUser EXIT");

@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "TYPE")
-public class Type {
+@Table(name = "PRODUCT_TYPE")
+public class ProductType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +14,7 @@ public class Type {
     @Column(name = "NAME", length = 100, nullable = false)
     private String name;
 
-    @OneToMany(targetEntity = Product.class, mappedBy = "type")
+    @OneToMany(targetEntity = Product.class, mappedBy = "productType")
     private List<Product> products;
 
     public Long getId() {

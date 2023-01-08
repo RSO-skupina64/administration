@@ -34,7 +34,8 @@ public class ProductAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<ProductBasicDetailsDto> createProduct(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody ProductCreateRequestDto pricesShopRequest) {
+    public ResponseEntity<ProductBasicDetailsDto> createProduct(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                                                @Valid @RequestBody ProductCreateRequestDto productCreateRequest) {
         log.info("createProduct: ENTRY");
         // todo: add code here
         log.info("createProduct: EXIT");
@@ -52,7 +53,8 @@ public class ProductAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<MessageDto> deleteProduct(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody DeleteProductDto pricesShopRequest) {
+    public ResponseEntity<MessageDto> deleteProduct(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                                    @Valid @RequestBody DeleteProductDto deleteProduct) {
         log.info("deleteProduct: ENTRY");
         // todo: add code here
         log.info("deleteProduct: EXIT");
@@ -69,7 +71,8 @@ public class ProductAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<?> updateProduct(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody ProductBasicDetailsDto pricesShopRequest) {
+    public ResponseEntity<?> updateProduct(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                           @Valid @RequestBody ProductBasicDetailsDto productBasicDetails) {
         log.info("updateProduct: ENTRY");
         // todo: add code here
         log.info("updateProduct: EXIT");

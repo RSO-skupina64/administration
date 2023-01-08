@@ -9,25 +9,25 @@ import javax.validation.constraints.NotBlank;
 public class UserDto {
 
     @JsonProperty("email")
-    @NotBlank(message = " is required.")
+    @NotBlank(message = "is required.")
     @Email
     private String email;
 
     @JsonProperty("name")
-    @NotBlank(message = " is required.")
+    @NotBlank(message = "is required.")
     private String name;
 
     @JsonProperty("last_name")
-    @NotBlank(message = " is required.")
+    @NotBlank(message = "is required.")
     private String lastName;
 
     @JsonProperty("username")
-    @NotBlank(message = " is required.")
+    @NotBlank(message = "is required.")
     @Length(min = 5, max = 20)
     private String username;
 
     @JsonProperty("password")
-    @NotBlank(message = " is required.")
+    @NotBlank(message = "is required.")
     @Length(min = 5, max = 20)
     private String password;
 

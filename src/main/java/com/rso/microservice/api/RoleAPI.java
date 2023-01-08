@@ -34,7 +34,8 @@ public class RoleAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<RoleWithIdDto> createRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody RoleDto pricesShopRequest) {
+    public ResponseEntity<RoleWithIdDto> createRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                                    @Valid @RequestBody RoleDto role) {
         log.info(".createRole ENTRY");
         // todo: add code here
         log.info(".createRole EXIT");
@@ -52,7 +53,8 @@ public class RoleAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<MessageDto> deleteRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody RoleIdDto pricesShopRequest) {
+    public ResponseEntity<MessageDto> deleteRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                                 @Valid @RequestBody RoleIdDto roleId) {
         log.info(".deleteRole ENTRY");
         // todo: add code here
         log.info(".deleteRole EXIT");
@@ -69,7 +71,8 @@ public class RoleAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<?> updateRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody RoleWithIdDto pricesShopRequest) {
+    public ResponseEntity<?> updateRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                        @Valid @RequestBody RoleWithIdDto roleWithId) {
         log.info(".updateRole ENTRY");
         // todo: add code here
         log.info(".updateRole EXIT");

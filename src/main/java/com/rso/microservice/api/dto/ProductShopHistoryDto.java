@@ -2,28 +2,29 @@ package com.rso.microservice.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-public class ProductHistoryWithIdDto {
-    @JsonProperty("id_product_history")
-    @NotBlank(message = "is required")
-    private Long idProductHistory;
+public class ProductShopHistoryDto {
+
+    @JsonProperty("id_product_shop")
+    @NotNull(message = "is required")
+    private Long idProductShop;
 
     @JsonProperty("date")
-    @NotBlank(message = "is required")
+    @NotNull(message = "is required")
     private LocalDateTime date;
 
     @JsonProperty("price_EUR")
-    @NotBlank(message = "is required")
+    @NotNull(message = "is required")
     private Long priceEUR;
 
-    public Long getIdProductHistory() {
-        return idProductHistory;
+    public Long getIdProductShop() {
+        return idProductShop;
     }
 
-    public void setIdProductHistory(Long idProductHistory) {
-        this.idProductHistory = idProductHistory;
+    public void setIdProductShop(Long idProductShop) {
+        this.idProductShop = idProductShop;
     }
 
     public LocalDateTime getDate() {

@@ -10,8 +10,8 @@ public class ProductCreateRequestDto {
     @JsonProperty("brand")
     private String brand;
 
-    @JsonProperty("type")
-    private String type;
+    @JsonProperty("product_type")
+    private String productType;
 
     @JsonProperty("concentration")
     private Double concentration;
@@ -20,7 +20,7 @@ public class ProductCreateRequestDto {
     private String concentrationUnit;
 
     @JsonProperty("image")
-    private String image;
+    private byte[] image;
 
     public String getName() {
         return name;
@@ -38,12 +38,12 @@ public class ProductCreateRequestDto {
         this.brand = brand;
     }
 
-    public String getType() {
-        return type;
+    public String getProductType() {
+        return productType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 
     public Double getConcentration() {
@@ -62,11 +62,11 @@ public class ProductCreateRequestDto {
         this.concentrationUnit = concentrationUnit;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

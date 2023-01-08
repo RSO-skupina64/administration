@@ -3,11 +3,12 @@ package com.rso.microservice.api.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class ProductBasicDetailsDto {
 
     @JsonProperty("id")
-    @NotBlank(message = "is required")
+    @NotNull(message = "is required")
     private Long id;
 
     @JsonProperty("name")
@@ -18,12 +19,12 @@ public class ProductBasicDetailsDto {
     @NotBlank(message = "is required")
     private String brand;
 
-    @JsonProperty("type")
+    @JsonProperty("product_type")
     @NotBlank(message = "is required")
-    private String type;
+    private String productType;
 
     @JsonProperty("concentration")
-    @NotBlank(message = "is required")
+    @NotNull(message = "is required")
     private Double concentration;
 
     @JsonProperty("concentration_unit")
@@ -31,7 +32,7 @@ public class ProductBasicDetailsDto {
     private String concentrationUnit;
 
     @JsonProperty("image")
-    private String image;
+    private byte[] image;
 
     public Long getId() {
         return id;
@@ -57,12 +58,12 @@ public class ProductBasicDetailsDto {
         this.brand = brand;
     }
 
-    public String getType() {
-        return type;
+    public String getProductType() {
+        return productType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 
     public Double getConcentration() {
@@ -81,11 +82,11 @@ public class ProductBasicDetailsDto {
         this.concentrationUnit = concentrationUnit;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 }

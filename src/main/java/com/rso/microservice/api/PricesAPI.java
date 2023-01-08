@@ -63,7 +63,8 @@ public class PricesAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<MessageDto> fetchProductPricesSpecificShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @PathVariable String id) {
+    public ResponseEntity<MessageDto> fetchProductPricesSpecificShop(
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @PathVariable String id) {
         log.info("fetchProductPricesSpecificShop: ENTRY");
         // todo: add code here
         log.info("fetchProductPricesSpecificShop: EXIT");
