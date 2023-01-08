@@ -25,8 +25,12 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ConcentrationUnitEnum concentrationUnit;
 
-    @ManyToOne(targetEntity = Type.class)
-    private Type type;
+    @Column(name = "IMAGE")
+    @Lob
+    private byte[] image;
+
+    @ManyToOne(targetEntity = ProductType.class)
+    private ProductType productType;
 
     @OneToMany(targetEntity = UserFavoriteProduct.class, mappedBy = "product")
     private List<UserFavoriteProduct> userFavoriteProducts;
@@ -74,6 +78,14 @@ public class Product {
         this.concentrationUnit = concentrationUnit;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public List<UserFavoriteProduct> getUserFavoriteProducts() {
         return userFavoriteProducts;
     }
@@ -82,12 +94,12 @@ public class Product {
         this.userFavoriteProducts = userFavoriteProducts;
     }
 
-    public Type getType() {
-        return type;
+    public ProductType getProductType() {
+        return productType;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
     public List<ProductShop> getShopProducts() {
