@@ -19,8 +19,11 @@ public class ShopService {
 
     public ShopListVAO getAllShops() {
         List<Shop> favoriteShops = shopRepository.findAll();
+        int count = 0;
+        if (favoriteShops != null)
+            count = favoriteShops.size();
 
-        return new ShopListVAO(favoriteShops.size(), favoriteShops);
+        return new ShopListVAO(count, favoriteShops);
     }
 
 }

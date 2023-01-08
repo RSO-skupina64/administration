@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package com.rso.microservice.grpc;
+
+message ShopsRequest {}
+
+message ShopGrpc {
+  string name = 1;
+}
+
+message ShopsResponse {
+  repeated ShopGrpc shops = 1;
+  int64 count = 2;
+}
+
+service ShopService {
+  rpc getShops(ShopsRequest) returns (ShopsResponse) {}
+}

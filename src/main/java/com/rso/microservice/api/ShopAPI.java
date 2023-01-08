@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import javax.validation.Valid;
 @RequestMapping("/shop")
 @Tag(name = "Shop")
 public class ShopAPI {
+    private static final Logger log = LoggerFactory.getLogger(ShopAPI.class);
 
     final ShopService shopService;
 
@@ -45,8 +48,11 @@ public class ShopAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<ShopWithIdDto> createShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody ShopDto shop) {
+    public ResponseEntity<ShopWithIdDto> createShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                                    @Valid @RequestBody ShopDto shop) {
+        log.info(".createShop ENTRY");
         // todo: add code here
+        log.info(".createShop EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
@@ -61,8 +67,11 @@ public class ShopAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<MessageDto> deleteShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody ShopIdDto shopId) {
+    public ResponseEntity<MessageDto> deleteShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                                 @Valid @RequestBody ShopIdDto shopId) {
+        log.info(".deleteShop ENTRY");
         // todo: add code here
+        log.info(".deleteShop EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
@@ -76,8 +85,11 @@ public class ShopAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<?> updateShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @Valid @RequestBody ShopWithIdDto shopWithId) {
+    public ResponseEntity<?> updateShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                        @Valid @RequestBody ShopWithIdDto shopWithId) {
+        log.info(".updateShop ENTRY");
         // todo: add code here
+        log.info(".updateShop EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
@@ -93,8 +105,11 @@ public class ShopAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<ShopsArrayResponseDto> getShops() {
-        return ResponseEntity.status(HttpStatus.OK)
+        log.info(".getShops ENTRY");
+        ResponseEntity<ShopsArrayResponseDto> response = ResponseEntity.status(HttpStatus.OK)
                 .body(shopMapper.toModel(shopService.getAllShops()));
+        log.info(".getShops EXIT");
+        return response;
     }
 
 }
