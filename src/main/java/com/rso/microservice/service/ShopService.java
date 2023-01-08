@@ -26,4 +26,8 @@ public class ShopService {
         return new ShopListVAO(count, favoriteShops);
     }
 
+    public Shop createShop(Shop shop) {
+        return shopRepository.save(shop);
+    }
+
 }

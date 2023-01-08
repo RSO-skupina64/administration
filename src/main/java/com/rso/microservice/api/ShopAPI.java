@@ -50,10 +50,11 @@ public class ShopAPI {
     })
     public ResponseEntity<ShopWithIdDto> createShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                     @Valid @RequestBody ShopDto shop) {
+        // todo jwt validation
         log.info(".createShop ENTRY");
-        // todo: add code here
+        ShopWithIdDto shopWithId = shopMapper.toModelShopWithIdDto(shopService.createShop(shopMapper.toModel(shop)));
         log.info(".createShop EXIT");
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        return ResponseEntity.status(HttpStatus.OK).body(shopWithId);
     }
 
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

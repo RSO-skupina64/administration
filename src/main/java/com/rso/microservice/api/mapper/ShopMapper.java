@@ -1,6 +1,7 @@
 package com.rso.microservice.api.mapper;
 
 import com.rso.microservice.api.dto.ShopDto;
+import com.rso.microservice.api.dto.ShopWithIdDto;
 import com.rso.microservice.api.dto.ShopsArrayResponseDto;
 import com.rso.microservice.entity.ProductType;
 import com.rso.microservice.entity.Shop;
@@ -28,5 +29,10 @@ public interface ShopMapper {
     List<ShopGrpc> toModelGrpc(List<Shop> shops);
 
     ShopGrpc toModelGrpc(Shop shop);
+
+    Shop toModel(ShopDto shop);
+
+    @Mapping(source = "id", target = "idShop")
+    ShopWithIdDto toModelShopWithIdDto(Shop shop);
 
 }
