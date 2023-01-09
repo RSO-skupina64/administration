@@ -35,4 +35,7 @@ public interface ShopMapper {
     @Mapping(source = "id", target = "idShop")
     ShopWithIdDto toModelShopWithIdDto(Shop shop);
 
+    @Mapping(source = "idShop", target = "id")
+    Shop toModel(ShopWithIdDto shopWithId);
+
 }

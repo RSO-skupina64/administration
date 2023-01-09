@@ -90,10 +90,11 @@ public class ShopAPI {
     })
     public ResponseEntity<?> updateShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                         @Valid @RequestBody ShopWithIdDto shopWithId) {
+        // todo jwt validation
         log.info("updateShop ENTRY");
-        // todo: add code here
+        shopService.updateShop(shopMapper.toModel(shopWithId));
         log.info("updateShop EXIT");
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("updateShop completed"));
     }
 
     @GetMapping(value = "/multi", produces = MediaType.APPLICATION_JSON_VALUE)

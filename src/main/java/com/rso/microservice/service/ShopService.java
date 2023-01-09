@@ -36,4 +36,12 @@ public class ShopService {
         }
     }
 
+    public Shop updateShop(Shop shop) {
+        if (shopRepository.existsById(shop.getId())) {
+            return shopRepository.save(shop);
+        }
+
+        return null;
+    }
+
 }
