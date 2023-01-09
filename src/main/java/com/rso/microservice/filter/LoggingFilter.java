@@ -18,13 +18,15 @@ import java.util.UUID;
 @Order(1)
 public class LoggingFilter implements Filter {
 
-    @Autowired
-    BuildProperties buildProperties;
+    final BuildProperties buildProperties;
+
+    public LoggingFilter(BuildProperties buildProperties) {
+        this.buildProperties = buildProperties;
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
-        HttpServletResponse res = (HttpServletResponse) servletResponse;
 
         String requestId = req.getHeader("X-Request-Id");
         if (requestId == null || requestId.isBlank())

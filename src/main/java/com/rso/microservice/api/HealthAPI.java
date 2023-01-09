@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.availability.ApplicationAvailability;
 import org.springframework.boot.availability.AvailabilityChangeEvent;
 import org.springframework.boot.availability.LivenessState;
@@ -29,13 +28,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthAPI {
     private static final Logger log = LoggerFactory.getLogger(HealthAPI.class);
 
-    @Autowired
-    ApplicationContext applicationContext;
+    final ApplicationContext applicationContext;
 
-    @Autowired
-    ApplicationAvailability applicationAvailability;
+    final ApplicationAvailability applicationAvailability;
 
-    @PostMapping(value = "/liveness", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public HealthAPI(ApplicationContext applicationContext, ApplicationAvailability applicationAvailability) {
+        this.applicationContext = applicationContext;
+        this.applicationAvailability = applicationAvailability;
+    }
+
+    @PostMapping(value = "/liveness", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Changes liveness",
             description = "Changes liveness of application (ONLY FOR DEMONSTRATION PURPOSES)")
     @ApiResponses({
@@ -46,19 +48,21 @@ public class HealthAPI {
     public ResponseEntity<MessageDto> changeLiveness() {
         log.info("changeLiveness: ENTRY");
         log.info("changeLiveness changing liveness state");
+        String newState;
         if (applicationAvailability.getLivenessState().equals(LivenessState.CORRECT)) {
-            log.info("changeLiveness changing to BROKEN");
+            newState = "BROKEN";
             AvailabilityChangeEvent.publish(applicationContext, LivenessState.BROKEN);
         } else {
-            log.info("changeLiveness changing to CORRECT");
+            newState = "CORRECT";
             AvailabilityChangeEvent.publish(applicationContext, LivenessState.CORRECT);
         }
-        MessageDto response = new MessageDto("Change successful");
+        log.info("changeLiveness changed to {}", newState);
+        MessageDto response = new MessageDto("Change successful to: " + newState);
         log.info("changeLiveness: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PostMapping(value = "/readiness", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/readiness", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Changes readiness",
             description = "Changes readiness of application (ONLY FOR DEMONSTRATION PURPOSES)")
     @ApiResponses({
@@ -69,14 +73,16 @@ public class HealthAPI {
     public ResponseEntity<MessageDto> changeReadiness() {
         log.info("changeReadiness: ENTRY");
         log.info("changeReadiness changing readiness state");
+        String newState;
         if (applicationAvailability.getReadinessState().equals(ReadinessState.ACCEPTING_TRAFFIC)) {
-            log.info("changeReadiness changing to REFUSING_TRAFFIC");
+            newState = "REFUSING_TRAFFIC";
             AvailabilityChangeEvent.publish(applicationContext, ReadinessState.REFUSING_TRAFFIC);
         } else {
-            log.info("changeReadiness changing to ACCEPTING_TRAFFIC");
+            newState = "ACCEPTING_TRAFFIC";
             AvailabilityChangeEvent.publish(applicationContext, ReadinessState.ACCEPTING_TRAFFIC);
         }
-        MessageDto response = new MessageDto("Change successful");
+        log.info("changeReadiness changed to " + newState);
+        MessageDto response = new MessageDto("Change successful to: " + newState);
         log.info("changeReadiness: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

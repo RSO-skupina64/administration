@@ -30,8 +30,6 @@ public class ShopAPI {
 
     final ShopMapper shopMapper;
 
-    @Autowired
-
     public ShopAPI(ShopService shopService, ShopMapper shopMapper) {
         this.shopService = shopService;
         this.shopMapper = shopMapper;
