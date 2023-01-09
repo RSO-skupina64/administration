@@ -45,12 +45,12 @@ public class HealthAPI {
     })
     public ResponseEntity<MessageDto> changeLiveness() {
         log.info("changeLiveness: ENTRY");
-        log.info(".changeLiveness changing liveness state");
+        log.info("changeLiveness changing liveness state");
         if (applicationAvailability.getLivenessState().equals(LivenessState.CORRECT)) {
-            log.info(".changeLiveness changing to BROKEN");
+            log.info("changeLiveness changing to BROKEN");
             AvailabilityChangeEvent.publish(applicationContext, LivenessState.BROKEN);
         } else {
-            log.info(".changeLiveness changing to CORRECT");
+            log.info("changeLiveness changing to CORRECT");
             AvailabilityChangeEvent.publish(applicationContext, LivenessState.CORRECT);
         }
         MessageDto response = new MessageDto("Change successful");
@@ -68,12 +68,12 @@ public class HealthAPI {
     })
     public ResponseEntity<MessageDto> changeReadiness() {
         log.info("changeReadiness: ENTRY");
-        log.info(".changeReadiness changing readiness state");
+        log.info("changeReadiness changing readiness state");
         if (applicationAvailability.getReadinessState().equals(ReadinessState.ACCEPTING_TRAFFIC)) {
-            log.info(".changeReadiness changing to REFUSING_TRAFFIC");
+            log.info("changeReadiness changing to REFUSING_TRAFFIC");
             AvailabilityChangeEvent.publish(applicationContext, ReadinessState.REFUSING_TRAFFIC);
         } else {
-            log.info(".changeReadiness changing to ACCEPTING_TRAFFIC");
+            log.info("changeReadiness changing to ACCEPTING_TRAFFIC");
             AvailabilityChangeEvent.publish(applicationContext, ReadinessState.ACCEPTING_TRAFFIC);
         }
         MessageDto response = new MessageDto("Change successful");

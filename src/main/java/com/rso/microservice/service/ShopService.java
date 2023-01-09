@@ -30,4 +30,10 @@ public class ShopService {
         return shopRepository.save(shop);
     }
 
+    public void removeShop(Long id) {
+        if (shopRepository.existsById(id)) {
+            shopRepository.deleteById(id);
+        }
+    }
+
 }

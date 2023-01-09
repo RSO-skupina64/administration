@@ -21,7 +21,7 @@ public interface ShopMapper {
 
     List<ShopDto> toModel(List<Shop> shops);
 
-    ShopDto toModel(Shop shop);
+    ShopDto toModelShopDto(Shop shop);
 
     @Mapping(source = "name", target = ".")
     String toModel(ProductType productType);
@@ -30,7 +30,7 @@ public interface ShopMapper {
 
     ShopGrpc toModelGrpc(Shop shop);
 
-    Shop toModel(ShopDto shop);
+    Shop toModelShop(ShopDto shop);
 
     @Mapping(source = "id", target = "idShop")
     ShopWithIdDto toModelShopWithIdDto(Shop shop);

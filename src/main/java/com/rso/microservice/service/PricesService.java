@@ -29,7 +29,7 @@ public class PricesService {
     }
 
     public String fetchPrices(String jwt) {
-        log.info(".fetchPrices fetching prices from URL: {}", pricesUrl);
+        log.info("fetchPrices fetching prices from URL: {}", pricesUrl);
         String requestId = MDCUtil.get(MDCUtil.MDCUtilKey.REQUEST_ID);
         MessageDto response = pricesService.callPricesUrl(jwt, requestId);
         log.info("received response: {}", response.getMessage());

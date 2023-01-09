@@ -39,9 +39,9 @@ public class UserAPI {
     })
     public ResponseEntity<MessageDto> deleteUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                  @Valid @RequestBody UserIdDto userId) {
-        log.info(".deleteUser ENTRY");
+        log.info("deleteUser ENTRY");
         // todo: add code here
-        log.info(".deleteUser EXIT");
+        log.info("deleteUser EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
@@ -57,9 +57,9 @@ public class UserAPI {
     })
     public ResponseEntity<?> updateUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                         @Valid @RequestBody UserDto user) {
-        log.info(".updateUser ENTRY");
+        log.info("updateUser ENTRY");
         // todo: add code here
-        log.info(".updateUser EXIT");
+        log.info("updateUser EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
