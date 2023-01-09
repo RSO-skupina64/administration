@@ -10,12 +10,12 @@ import org.springframework.core.env.Environment;
 import javax.sql.DataSource;
 
 @Configuration
-public class DataSourceConfig {
-    private static final Logger log = LoggerFactory.getLogger(DataSourceConfig.class);
+public class SpringConfig {
+    private static final Logger log = LoggerFactory.getLogger(SpringConfig.class);
 
     private final Environment environment;
 
-    public DataSourceConfig(Environment environment) {
+    public SpringConfig(Environment environment) {
         this.environment = environment;
     }
 
