@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: administration-deployment
+  namespace: rso-namespace
 spec:
   replicas: 1
   selector:
@@ -19,6 +20,9 @@ spec:
             - containerPort: 8080
               name: server
               protocol: TCP
+            - containerPort: 9090
+              name: grpc
+              protocol: TCP
           env:
             - name: spring.datasource.url
               value: jdbc:mysql://primerjalnik-cen-server.mysql.database.azure.com:3306/primerjalnik-cen?useSSL=true
@@ -28,6 +32,8 @@ spec:
               value: Rso2022@
             - name: LOGBACK_DESTINATION
               value: aab8af63-1013-422f-8043-7012c08ace36-ls.logit.io:27798
+            - name: SPRING_CLOUD_CONFIG_SERVER_URI
+              value: http://20.101.252.23:8888
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -47,11 +53,17 @@ apiVersion: v1
 kind: Service
 metadata:
   name: administration
+  namespace: rso-namespace
 spec:
   type: LoadBalancer
   ports:
     - port: 8080
       protocol: TCP
       targetPort: server
+      name: server
+    - port: 9090
+      protocol: TCP
+      targetPort: grpc
+      name: grpc
   selector:
     app: administration
