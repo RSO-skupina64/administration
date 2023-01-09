@@ -21,7 +21,7 @@ public class MDCUtil {
         MICROSERVICE_VERSION("microservice-version"),
         REQUEST_ID("microservice-request-id");
 
-        private String value;
+        private final String value;
 
         MDCUtilKey(String v) {
             this.value = v;

@@ -27,7 +27,8 @@ public class ShopsServiceImpl extends ShopServiceGrpc.ShopServiceImplBase {
 
     @Override
     public void getShops(ShopsRequest request, StreamObserver<ShopsResponse> responseObserver) {
-        log.info("getShops via grpc protocol");
+        log.info("getShops via gRPC protocol");
+        log.info("calling shopService.getAllShops");
         ShopListVAO list = shopService.getAllShops();
 
         Iterable<ShopGrpc> iterable = shopMapper.toModelGrpc(list.getShops());
@@ -37,6 +38,7 @@ public class ShopsServiceImpl extends ShopServiceGrpc.ShopServiceImplBase {
                 .addAllShops(iterable)
                 .build();
 
+        log.info("returning response via gRPC protocol and closing connection");
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
