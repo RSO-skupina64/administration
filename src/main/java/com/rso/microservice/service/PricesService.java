@@ -48,7 +48,7 @@ public class PricesService {
 
     public MessageDto circuitBreaker(String jwt, String requestId) {
         log.error("There was an error when calling fetchPrices, so circuit breaker was activated");
-        return new MessageDto("Error while calling prices, circuit breaker method");
+        return new MessageDto("Error while calling prices, circuit breaker method called");
     }
 
 }

@@ -14,7 +14,7 @@ spec:
         app: administration
     spec:
       containers:
-        - image: as9721/administration:2022-12-29-22-39-08
+        - image: as9721/administration:2023-01-09-21-56-26
           name: administration
           ports:
             - containerPort: 8080
@@ -32,7 +32,7 @@ spec:
               value: Rso2022@
             - name: LOGBACK_DESTINATION
               value: aab8af63-1013-422f-8043-7012c08ace36-ls.logit.io:27798
-            - name: SPRING_CLOUD_CONFIG_SERVER_URI
+            - name: CONFIG_SERVER_URL
               value: http://20.101.252.23:8888
           livenessProbe:
             httpGet:
