@@ -36,9 +36,9 @@ public class RoleAPI {
     })
     public ResponseEntity<RoleWithIdDto> createRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                     @Valid @RequestBody RoleDto role) {
-        log.info(".createRole ENTRY");
+        log.info("createRole ENTRY");
         // todo: add code here
-        log.info(".createRole EXIT");
+        log.info("createRole EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
@@ -55,9 +55,9 @@ public class RoleAPI {
     })
     public ResponseEntity<MessageDto> deleteRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                  @Valid @RequestBody RoleIdDto roleId) {
-        log.info(".deleteRole ENTRY");
+        log.info("deleteRole ENTRY");
         // todo: add code here
-        log.info(".deleteRole EXIT");
+        log.info("deleteRole EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
@@ -73,9 +73,9 @@ public class RoleAPI {
     })
     public ResponseEntity<?> updateRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                         @Valid @RequestBody RoleWithIdDto roleWithId) {
-        log.info(".updateRole ENTRY");
+        log.info("updateRole ENTRY");
         // todo: add code here
-        log.info(".updateRole EXIT");
+        log.info("updateRole EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 

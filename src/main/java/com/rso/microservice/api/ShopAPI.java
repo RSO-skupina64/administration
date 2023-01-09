@@ -48,10 +48,11 @@ public class ShopAPI {
     })
     public ResponseEntity<ShopWithIdDto> createShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                     @Valid @RequestBody ShopDto shop) {
-        log.info(".createShop ENTRY");
-        // todo: add code here
-        log.info(".createShop EXIT");
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        // todo jwt validation
+        log.info("createShop ENTRY");
+        ShopWithIdDto shopWithId = shopMapper.toModelShopWithIdDto(shopService.createShop(shopMapper.toModelShop(shop)));
+        log.info("createShop EXIT");
+        return ResponseEntity.status(HttpStatus.OK).body(shopWithId);
     }
 
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,10 +68,12 @@ public class ShopAPI {
     })
     public ResponseEntity<MessageDto> deleteShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                  @Valid @RequestBody ShopIdDto shopId) {
-        log.info(".deleteShop ENTRY");
-        // todo: add code here
-        log.info(".deleteShop EXIT");
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        // todo jwt validation
+        log.info("deleteShop ENTRY");
+        Long id = Long.parseLong(shopId.getIdShop());
+        shopService.removeShop(id);
+        log.info("deleteShop EXIT");
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("deleteShop completed"));
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -85,10 +88,11 @@ public class ShopAPI {
     })
     public ResponseEntity<?> updateShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                         @Valid @RequestBody ShopWithIdDto shopWithId) {
-        log.info(".updateShop ENTRY");
-        // todo: add code here
-        log.info(".updateShop EXIT");
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        // todo jwt validation
+        log.info("updateShop ENTRY");
+        shopService.updateShop(shopMapper.toModel(shopWithId));
+        log.info("updateShop EXIT");
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("updateShop completed"));
     }
 
     @GetMapping(value = "/multi", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -103,10 +107,10 @@ public class ShopAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<ShopsArrayResponseDto> getShops() {
-        log.info(".getShops ENTRY");
+        log.info("getShops ENTRY");
         ResponseEntity<ShopsArrayResponseDto> response = ResponseEntity.status(HttpStatus.OK)
                 .body(shopMapper.toModel(shopService.getAllShops()));
-        log.info(".getShops EXIT");
+        log.info("getShops EXIT");
         return response;
     }
 

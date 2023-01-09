@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.availability.ApplicationAvailability;
 import org.springframework.boot.availability.AvailabilityChangeEvent;
 import org.springframework.boot.availability.LivenessState;
@@ -48,7 +47,7 @@ public class HealthAPI {
     })
     public ResponseEntity<MessageDto> changeLiveness() {
         log.info("changeLiveness: ENTRY");
-        log.info(".changeLiveness changing liveness state");
+        log.info("changeLiveness changing liveness state");
         String newState;
         if (applicationAvailability.getLivenessState().equals(LivenessState.CORRECT)) {
             newState = "BROKEN";
@@ -57,7 +56,7 @@ public class HealthAPI {
             newState = "CORRECT";
             AvailabilityChangeEvent.publish(applicationContext, LivenessState.CORRECT);
         }
-        log.info(".changeLiveness changed to {}", newState);
+        log.info("changeLiveness changed to {}", newState);
         MessageDto response = new MessageDto("Change successful to: " + newState);
         log.info("changeLiveness: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -73,7 +72,7 @@ public class HealthAPI {
     })
     public ResponseEntity<MessageDto> changeReadiness() {
         log.info("changeReadiness: ENTRY");
-        log.info(".changeReadiness changing readiness state");
+        log.info("changeReadiness changing readiness state");
         String newState;
         if (applicationAvailability.getReadinessState().equals(ReadinessState.ACCEPTING_TRAFFIC)) {
             newState = "REFUSING_TRAFFIC";
@@ -82,7 +81,7 @@ public class HealthAPI {
             newState = "ACCEPTING_TRAFFIC";
             AvailabilityChangeEvent.publish(applicationContext, ReadinessState.ACCEPTING_TRAFFIC);
         }
-        log.info(".changeReadiness changed to " + newState);
+        log.info("changeReadiness changed to " + newState);
         MessageDto response = new MessageDto("Change successful to: " + newState);
         log.info("changeReadiness: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(response);

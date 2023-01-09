@@ -30,4 +30,22 @@ public class ShopService {
         return new ShopListVAO(count, favoriteShops);
     }
 
+    public Shop createShop(Shop shop) {
+        return shopRepository.save(shop);
+    }
+
+    public void removeShop(Long id) {
+        if (shopRepository.existsById(id)) {
+            shopRepository.deleteById(id);
+        }
+    }
+
+    public Shop updateShop(Shop shop) {
+        if (shopRepository.existsById(shop.getId())) {
+            return shopRepository.save(shop);
+        }
+
+        return null;
+    }
+
 }
