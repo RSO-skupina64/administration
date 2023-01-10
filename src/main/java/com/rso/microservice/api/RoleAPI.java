@@ -1,6 +1,8 @@
 package com.rso.microservice.api;
 
 import com.rso.microservice.api.dto.*;
+import com.rso.microservice.api.mapper.RoleMapper;
+import com.rso.microservice.service.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,6 +25,15 @@ import javax.validation.Valid;
 public class RoleAPI {
     private static final Logger log = LoggerFactory.getLogger(RoleAPI.class);
 
+    final RoleService roleService;
+
+    final RoleMapper roleMapper;
+
+    public RoleAPI(RoleService roleService, RoleMapper roleMapper) {
+        this.roleService = roleService;
+        this.roleMapper = roleMapper;
+    }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Creates new User role",
             description = "Creates new User role")
@@ -36,10 +47,11 @@ public class RoleAPI {
     })
     public ResponseEntity<RoleWithIdDto> createRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                     @Valid @RequestBody RoleDto role) {
+        // todo jwt validation
         log.info("createRole ENTRY");
-        // todo: add code here
+        RoleWithIdDto roleWithId = roleMapper.toModel(roleService.createRole(roleMapper.toModel(role)));
         log.info("createRole EXIT");
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        return ResponseEntity.status(HttpStatus.OK).body(roleWithId);
     }
 
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,8 +67,10 @@ public class RoleAPI {
     })
     public ResponseEntity<MessageDto> deleteRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                  @Valid @RequestBody RoleIdDto roleId) {
+        // todo jwt validation
         log.info("deleteRole ENTRY");
-        // todo: add code here
+        Long id = Long.valueOf(roleId.getIdRole());
+        roleService.removeRole(id);
         log.info("deleteRole EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
@@ -73,8 +87,9 @@ public class RoleAPI {
     })
     public ResponseEntity<?> updateRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                         @Valid @RequestBody RoleWithIdDto roleWithId) {
+        // todo jwt validation
         log.info("updateRole ENTRY");
-        // todo: add code here
+        roleService.updateRole(roleMapper.toModel(roleWithId));
         log.info("updateRole EXIT");
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }

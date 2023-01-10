@@ -31,7 +31,7 @@ public class ShopsServiceImpl extends ShopServiceGrpc.ShopServiceImplBase {
         log.info("calling shopService.getAllShops");
         ShopListVAO list = shopService.getAllShops();
 
-        Iterable<ShopGrpc> iterable = shopMapper.toModelGrpc(list.getShops());
+        Iterable<ShopGrpc> iterable = shopMapper.toModelShopGrpc(list.getShops());
 
         ShopsResponse response = ShopsResponse.newBuilder()
                 .setCount(list.getCount())
