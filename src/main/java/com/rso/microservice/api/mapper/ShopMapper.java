@@ -23,8 +23,9 @@ public interface ShopMapper {
 
     ShopDto toModelShopDto(Shop shop);
 
-    @Mapping(source = "name", target = ".")
-    String toModel(ProductType productType);
+    default String toModel(ProductType productType) {
+        return productType.getName();
+    }
 
     List<ShopGrpc> toModelShopGrpc(List<Shop> shops);
 

@@ -11,7 +11,6 @@ public class RoleWithIdDto {
     private String idRole;
 
     @JsonProperty("name")
-    @NotBlank(message = "is required")
     private String name;
 
     public String getIdRole() {

@@ -11,7 +11,6 @@ public class ProductTypeWithIdDto {
     private String idProductType;
 
     @JsonProperty("name")
-    @NotBlank(message = "is required")
     private String name;
 
     public String getIdProductType() {

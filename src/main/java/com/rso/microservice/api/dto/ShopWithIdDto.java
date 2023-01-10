@@ -10,7 +10,6 @@ public class ShopWithIdDto {
     private String idShop;
 
     @JsonProperty("name")
-    @NotBlank(message = "is required")
     private String name;
 
     public String getIdShop() {

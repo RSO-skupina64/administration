@@ -70,7 +70,7 @@ public class ProductShopHistoryAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<MessageDto> deleteProductShopHistory(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
-                                                               @Valid @RequestBody DeleteProductDto deleteProduct) {
+                                                               @Valid @RequestBody ProductIdDto deleteProduct) {
         // todo jwt validation
         log.info("deleteProductShopHistory: ENTRY");
         productShopHistoryService.removeProductShopHistoryByProductId(deleteProduct.getIdProduct());

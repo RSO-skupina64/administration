@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotBlank;
 
 public class UserIdDto {
+
     @JsonProperty("id_user")
     @NotBlank(message = "is required")
     private String idUser;
