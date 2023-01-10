@@ -53,7 +53,7 @@ public class PricesAPI {
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto(response));
     }
 
-    @GetMapping(value = "/shop/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/shop/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Fetches prices for specific shop",
             description = "Fetches prices for specific shop")
     @ApiResponses({

@@ -51,10 +51,9 @@ public class PricesService {
         return response.getBody();
     }
 
-    public MessageDto circuitBreakerFetchProductPricesSpecificShop(String jwt, String id, boolean fetchPictures,
-                                                                   String requestId, String version) {
+    public MessageDto circuitBreakerFetchProductPrices(String jwt, boolean fetchPictures, String requestId, String version) {
         MDCUtil.putAll("Administration", version, requestId);
-        log.error("There was an error when calling fetchProductPricesSpecificShop, so circuit breaker was activated");
+        log.error("There was an error when calling fetchProductPrices, so circuit breaker was activated");
         return new MessageDto("Error while calling prices, circuit breaker method called");
     }
 
@@ -87,9 +86,10 @@ public class PricesService {
         return response.getBody();
     }
 
-    public MessageDto circuitBreakerFetchProductPrices(String jwt, boolean fetchPictures, String requestId, String version) {
+    public MessageDto circuitBreakerFetchProductPricesSpecificShop(String jwt, String id, boolean fetchPictures,
+                                                                   String requestId, String version) {
         MDCUtil.putAll("Administration", version, requestId);
-        log.error("There was an error when calling fetchProductPrices, so circuit breaker was activated");
+        log.error("There was an error when calling fetchProductPricesSpecificShop, so circuit breaker was activated");
         return new MessageDto("Error while calling prices, circuit breaker method called");
     }
 

@@ -70,10 +70,10 @@ public class ProductShopHistoryAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<MessageDto> deleteProductShopHistory(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
-                                                               @Valid @RequestBody ProductIdDto deleteProduct) {
+                                                               @Valid @RequestBody ProductIdDto productId) {
         // todo jwt validation
         log.info("deleteProductShopHistory: ENTRY");
-        productShopHistoryService.removeProductShopHistoryByProductId(deleteProduct.getIdProduct());
+        productShopHistoryService.removeProductShopHistoryByProductId(productId.getIdProduct());
         log.info("deleteProductShopHistory: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("deleteProductShopHistory completed"));
     }

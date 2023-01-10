@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/product-type")
-@Tag(name = "Product Type")
+@Tag(name = "Product product type")
 public class ProductTypeAPI {
     private static final Logger log = LoggerFactory.getLogger(ProductTypeAPI.class);
 
@@ -35,8 +35,8 @@ public class ProductTypeAPI {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Creates new Type",
-            description = "Creates new Type")
+    @Operation(summary = "Creates new product type",
+            description = "Creates new product type")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Creation successful",
                     content = @Content(schema = @Schema(implementation = ProductTypeWithIdDto.class))),
@@ -56,10 +56,10 @@ public class ProductTypeAPI {
     }
 
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Deletes Type",
-            description = "Deletes Type")
+    @Operation(summary = "Deletes product type",
+            description = "Deletes product type")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Delete Type",
+            @ApiResponse(responseCode = "200", description = "Delete product type",
                     content = @Content(schema = @Schema(implementation = MessageDto.class))),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class))),
@@ -77,8 +77,8 @@ public class ProductTypeAPI {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Updates Type",
-            description = "Updates Type")
+    @Operation(summary = "Updates product type",
+            description = "Updates product type")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Update successful"),
             @ApiResponse(responseCode = "400", description = "Bad request",
