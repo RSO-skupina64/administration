@@ -45,9 +45,11 @@ public class PricesAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
-    public ResponseEntity<MessageDto> fetchProductPrices(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt) {
+    public ResponseEntity<MessageDto> fetchProductPrices(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                                         @RequestParam(required = false, defaultValue = "false") boolean fetchPictures) {
         log.info("fetchProductPrices: ENTRY");
-        String response = pricesService.fetchPrices(jwt);
+        // todo fetchpictures
+        String response = pricesService.fetchPrices(jwt, fetchPictures);
         log.info("fetchProductPrices: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto(response));
     }
@@ -64,11 +66,12 @@ public class PricesAPI {
                     content = @Content(schema = @Schema(implementation = ErrorDto.class)))
     })
     public ResponseEntity<MessageDto> fetchProductPricesSpecificShop(
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @PathVariable String id) {
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @PathVariable String id,
+            @RequestParam(required = false, defaultValue = "false") boolean fetchPictures) {
         log.info("fetchProductPricesSpecificShop: ENTRY");
-        // todo: add code here
+        String response = pricesService.fetchPricesSpecificShop(jwt, id, fetchPictures);
         log.info("fetchProductPricesSpecificShop: EXIT");
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageDto(response));
     }
 
 }
