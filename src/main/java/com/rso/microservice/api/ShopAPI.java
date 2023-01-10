@@ -50,7 +50,7 @@ public class ShopAPI {
                                                     @Valid @RequestBody ShopDto shop) {
         // todo jwt validation
         log.info("createShop ENTRY");
-        ShopWithIdDto shopWithId = shopMapper.toModelShopWithIdDto(shopService.createShop(shopMapper.toModelShop(shop)));
+        ShopWithIdDto shopWithId = shopMapper.toModelShopWithIdDto(shopService.createShop(shopMapper.toModel(shop)));
         log.info("createShop EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(shopWithId);
     }

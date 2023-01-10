@@ -19,18 +19,18 @@ public interface ShopMapper {
     @Mapping(source = "count", target = "count")
     ShopsArrayResponseDto toModel(ShopListVAO shopListVAO);
 
-    List<ShopDto> toModel(List<Shop> shops);
+    List<ShopDto> toModelShopDto(List<Shop> shops);
 
     ShopDto toModelShopDto(Shop shop);
 
     @Mapping(source = "name", target = ".")
     String toModel(ProductType productType);
 
-    List<ShopGrpc> toModelGrpc(List<Shop> shops);
+    List<ShopGrpc> toModelShopGrpc(List<Shop> shops);
 
-    ShopGrpc toModelGrpc(Shop shop);
+    ShopGrpc toModelShopGrpc(Shop shop);
 
-    Shop toModelShop(ShopDto shop);
+    Shop toModel(ShopDto shop);
 
     @Mapping(source = "id", target = "idShop")
     ShopWithIdDto toModelShopWithIdDto(Shop shop);
