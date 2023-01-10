@@ -26,28 +26,17 @@ public class PricesService {
         this.pricesService = pricesService;
     }
 
-    public String fetchPrices(String jwt, boolean fetchPictures) {
-        log.info("fetchPrices fetching prices from URL: {}", pricesUrl);
+    public String fetchProductPrices(String jwt, boolean fetchPictures) {
+        log.info("fetchProductPrices from URL: {}", pricesUrl);
         String requestId = MDCUtil.get(MDCUtil.MDCUtilKey.REQUEST_ID);
         String version = MDCUtil.get(MDCUtil.MDCUtilKey.MICROSERVICE_VERSION);
-        MessageDto response = pricesService.callPricesUrl(jwt, fetchPictures, requestId, version);
+        MessageDto response = pricesService.callFetchProductPrices(jwt, fetchPictures, requestId, version);
         log.info("received response: {}", response.getMessage());
         return response.getMessage();
     }
 
-
-    public String fetchPricesSpecificShop(String jwt, String id, boolean fetchPictures) {
-        String pricesUrlSpecificShop = String.format("%s/shop", pricesUrl);
-        log.info("fetchPrices fetching prices from URL: {}", pricesUrlSpecificShop);
-        String requestId = MDCUtil.get(MDCUtil.MDCUtilKey.REQUEST_ID);
-        String version = MDCUtil.get(MDCUtil.MDCUtilKey.MICROSERVICE_VERSION);
-        MessageDto response = pricesService.callPricesSpecificShopUrl(jwt, id, fetchPictures, requestId, version);
-        log.info("received response: {}", response.getMessage());
-        return response.getMessage();
-    }
-
-    @HystrixCommand(fallbackMethod = "circuitBreaker")
-    public MessageDto callPricesUrl(String jwt, boolean fetchPictures, String requestId, String version) {
+    @HystrixCommand(fallbackMethod = "circuitBreakerFetchProductPrices")
+    public MessageDto callFetchProductPrices(String jwt, boolean fetchPictures, String requestId, String version) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pricesUrl)
                 .queryParam("fetchPictures", fetchPictures);
         String url = builder.toUriString();
@@ -62,9 +51,27 @@ public class PricesService {
         return response.getBody();
     }
 
-    @HystrixCommand(fallbackMethod = "circuitBreakerSpecificShop")
-    public MessageDto callPricesSpecificShopUrl(String jwt, String id, boolean fetchPictures, String requestId,
-                                                String version) {
+    public MessageDto circuitBreakerFetchProductPricesSpecificShop(String jwt, String id, boolean fetchPictures,
+                                                                   String requestId, String version) {
+        MDCUtil.putAll("Administration", version, requestId);
+        log.error("There was an error when calling fetchProductPricesSpecificShop, so circuit breaker was activated");
+        return new MessageDto("Error while calling prices, circuit breaker method called");
+    }
+
+    public String fetchProductPricesSpecificShop(String jwt, String id, boolean fetchPictures) {
+        String pricesUrlSpecificShop = String.format("%s/shop", pricesUrl);
+        log.info("fetchProductPricesSpecificShop from URL: {}", pricesUrlSpecificShop);
+        String requestId = MDCUtil.get(MDCUtil.MDCUtilKey.REQUEST_ID);
+        String version = MDCUtil.get(MDCUtil.MDCUtilKey.MICROSERVICE_VERSION);
+        MessageDto response = pricesService.callFetchProductPricesSpecificShop(jwt, id, fetchPictures, requestId,
+                version);
+        log.info("received response: {}", response.getMessage());
+        return response.getMessage();
+    }
+
+    @HystrixCommand(fallbackMethod = "circuitBreakerFetchProductPricesSpecificShop")
+    public MessageDto callFetchProductPricesSpecificShop(String jwt, String id, boolean fetchPictures, String requestId,
+                                                         String version) {
         String url = String.format("%s/shop/%s", pricesUrl, id);
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("fetchPictures", fetchPictures);
@@ -80,16 +87,9 @@ public class PricesService {
         return response.getBody();
     }
 
-    public MessageDto circuitBreaker(String jwt, boolean fetchPictures, String requestId, String version) {
+    public MessageDto circuitBreakerFetchProductPrices(String jwt, boolean fetchPictures, String requestId, String version) {
         MDCUtil.putAll("Administration", version, requestId);
-        log.error("There was an error when calling fetchPrices, so circuit breaker was activated");
-        return new MessageDto("Error while calling prices, circuit breaker method called");
-    }
-
-    public MessageDto circuitBreakerSpecificShop(String jwt, String id, boolean fetchPictures, String requestId,
-                                                 String version) {
-        MDCUtil.putAll("Administration", version, requestId);
-        log.error("There was an error when calling fetchPricesSpecificShop, so circuit breaker was activated");
+        log.error("There was an error when calling fetchProductPrices, so circuit breaker was activated");
         return new MessageDto("Error while calling prices, circuit breaker method called");
     }
 
