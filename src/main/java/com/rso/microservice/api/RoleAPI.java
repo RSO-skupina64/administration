@@ -35,8 +35,8 @@ public class RoleAPI {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Creates new User role",
-            description = "Creates new User role")
+    @Operation(summary = "Creates new user role",
+            description = "Creates new user role")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Creation successful",
                     content = @Content(schema = @Schema(implementation = RoleWithIdDto.class))),
@@ -55,10 +55,10 @@ public class RoleAPI {
     }
 
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Deletes Role",
-            description = "Deletes Role")
+    @Operation(summary = "Deletes role",
+            description = "Deletes role")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Delete Type",
+            @ApiResponse(responseCode = "200", description = "Delete product type",
                     content = @Content(schema = @Schema(implementation = MessageDto.class))),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(schema = @Schema(implementation = ErrorDto.class))),
@@ -76,8 +76,8 @@ public class RoleAPI {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Updates Role",
-            description = "Updates Role")
+    @Operation(summary = "Updates role",
+            description = "Updates role")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Update successful"),
             @ApiResponse(responseCode = "400", description = "Bad request",

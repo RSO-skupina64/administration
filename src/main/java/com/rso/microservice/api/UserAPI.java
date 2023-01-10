@@ -38,8 +38,8 @@ public class UserAPI {
     }
 
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Deletes User",
-            description = "Deletes User")
+    @Operation(summary = "Deletes user",
+            description = "Deletes user")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Delete user",
                     content = @Content(schema = @Schema(implementation = MessageDto.class))),
@@ -59,8 +59,8 @@ public class UserAPI {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Updates User",
-            description = "Updates User")
+    @Operation(summary = "Updates user",
+            description = "Updates user")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Update successful"),
             @ApiResponse(responseCode = "400", description = "Bad request",
