@@ -12,6 +12,12 @@ public class MDCUtil {
         return MDC.get(key.getValue());
     }
 
+    public static void putAll(String name, String version, String requestId) {
+        MDC.put(MDCUtilKey.MICROSERVICE_NAME.getValue(), name);
+        MDC.put(MDCUtilKey.MICROSERVICE_VERSION.getValue(), version);
+        MDC.put(MDCUtilKey.REQUEST_ID.getValue(), requestId);
+    }
+
     public static void clear() {
         MDC.clear();
     }

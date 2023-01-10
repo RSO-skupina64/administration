@@ -31,13 +31,15 @@ public class PricesService {
     public String fetchPrices(String jwt) {
         log.info("fetchPrices fetching prices from URL: {}", pricesUrl);
         String requestId = MDCUtil.get(MDCUtil.MDCUtilKey.REQUEST_ID);
-        MessageDto response = pricesService.callPricesUrl(jwt, requestId);
+        String version = MDCUtil.get(MDCUtil.MDCUtilKey.MICROSERVICE_VERSION);
+        MessageDto response = pricesService.callPricesUrl(jwt, requestId, version);
         log.info("received response: {}", response.getMessage());
         return response.getMessage();
     }
 
     @HystrixCommand(fallbackMethod = "circuitBreaker")
-    public MessageDto callPricesUrl(String jwt, String requestId) {
+    public MessageDto callPricesUrl(String jwt, String requestId, String version) {
+        MDCUtil.putAll("Administration", version, requestId);
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.AUTHORIZATION, jwt);
         headers.add("X-Request-Id", requestId);
@@ -46,7 +48,8 @@ public class PricesService {
         return response.getBody();
     }
 
-    public MessageDto circuitBreaker(String jwt, String requestId) {
+    public MessageDto circuitBreaker(String jwt, String requestId, String version) {
+        MDCUtil.putAll("Administration", version, requestId);
         log.error("There was an error when calling fetchPrices, so circuit breaker was activated");
         return new MessageDto("Error while calling prices, circuit breaker method called");
     }
