@@ -48,7 +48,6 @@ public class PricesAPI {
     public ResponseEntity<MessageDto> fetchProductPrices(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                          @RequestParam(required = false, defaultValue = "false") boolean fetchPictures) {
         log.info("fetchProductPrices: ENTRY");
-        // todo fetchpictures
         String response = pricesService.fetchPrices(jwt, fetchPictures);
         log.info("fetchProductPrices: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto(response));
