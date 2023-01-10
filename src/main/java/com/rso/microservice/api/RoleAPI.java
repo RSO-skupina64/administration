@@ -72,7 +72,7 @@ public class RoleAPI {
         Long id = Long.valueOf(roleId.getIdRole());
         roleService.removeRole(id);
         log.info("deleteRole EXIT");
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("deleteRole completed"));
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -91,7 +91,7 @@ public class RoleAPI {
         log.info("updateRole ENTRY");
         roleService.updateRole(roleMapper.toModel(roleWithId));
         log.info("updateRole EXIT");
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("updateRole completed"));
     }
 
 }
