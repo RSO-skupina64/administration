@@ -48,7 +48,7 @@ public class PricesAPI {
     public ResponseEntity<MessageDto> fetchProductPrices(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                          @RequestParam(required = false, defaultValue = "false") boolean fetchPictures) {
         log.info("fetchProductPrices: ENTRY");
-        String response = pricesService.fetchPrices(jwt, fetchPictures);
+        String response = pricesService.fetchProductPrices(jwt, fetchPictures);
         log.info("fetchProductPrices: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto(response));
     }
@@ -68,7 +68,7 @@ public class PricesAPI {
             @RequestHeader(HttpHeaders.AUTHORIZATION) String jwt, @PathVariable String id,
             @RequestParam(required = false, defaultValue = "false") boolean fetchPictures) {
         log.info("fetchProductPricesSpecificShop: ENTRY");
-        String response = pricesService.fetchPricesSpecificShop(jwt, id, fetchPictures);
+        String response = pricesService.fetchProductPricesSpecificShop(jwt, id, fetchPictures);
         log.info("fetchProductPricesSpecificShop: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto(response));
     }
