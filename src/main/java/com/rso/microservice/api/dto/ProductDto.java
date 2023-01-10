@@ -2,21 +2,29 @@ package com.rso.microservice.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ProductCreateRequestDto {
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+public class ProductDto {
 
     @JsonProperty("name")
+    @NotBlank(message = "is required")
     private String name;
 
     @JsonProperty("brand")
+    @NotBlank(message = "is required")
     private String brand;
 
-    @JsonProperty("product_type")
-    private String productType;
+    @JsonProperty("id_product_type")
+    @NotNull(message = "is required")
+    private Long idProductType;
 
     @JsonProperty("concentration")
+    @NotNull(message = "is required")
     private Double concentration;
 
     @JsonProperty("concentration_unit")
+    @NotBlank(message = "is required")
     private String concentrationUnit;
 
     @JsonProperty("image")
@@ -38,12 +46,12 @@ public class ProductCreateRequestDto {
         this.brand = brand;
     }
 
-    public String getProductType() {
-        return productType;
+    public Long getIdProductType() {
+        return idProductType;
     }
 
-    public void setProductType(String productType) {
-        this.productType = productType;
+    public void setIdProductType(Long idProductType) {
+        this.idProductType = idProductType;
     }
 
     public Double getConcentration() {

@@ -5,41 +5,37 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class ProductBasicDetailsDto {
+public class ProductWithIdDto {
 
-    @JsonProperty("id")
+    @JsonProperty("id_product")
     @NotNull(message = "is required")
-    private Long id;
+    private Long idProduct;
 
     @JsonProperty("name")
-    @NotBlank(message = "is required")
     private String name;
 
     @JsonProperty("brand")
-    @NotBlank(message = "is required")
     private String brand;
 
-    @JsonProperty("product_type")
-    @NotBlank(message = "is required")
-    private String productType;
+    @JsonProperty("id_product_type")
+    private Long idProductType;
+
 
     @JsonProperty("concentration")
-    @NotNull(message = "is required")
     private Double concentration;
 
     @JsonProperty("concentration_unit")
-    @NotBlank(message = "is required")
     private String concentrationUnit;
 
     @JsonProperty("image")
     private byte[] image;
 
-    public Long getId() {
-        return id;
+    public Long getIdProduct() {
+        return idProduct;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdProduct(Long idProduct) {
+        this.idProduct = idProduct;
     }
 
     public String getName() {
@@ -58,12 +54,12 @@ public class ProductBasicDetailsDto {
         this.brand = brand;
     }
 
-    public String getProductType() {
-        return productType;
+    public Long getIdProductType() {
+        return idProductType;
     }
 
-    public void setProductType(String productType) {
-        this.productType = productType;
+    public void setIdProductType(Long idProductType) {
+        this.idProductType = idProductType;
     }
 
     public Double getConcentration() {
