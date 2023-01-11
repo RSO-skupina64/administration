@@ -2,6 +2,7 @@ package com.rso.microservice.api;
 
 import com.rso.microservice.api.dto.*;
 import com.rso.microservice.api.mapper.RoleMapper;
+import com.rso.microservice.service.AuthenticationService;
 import com.rso.microservice.service.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,12 +27,13 @@ public class RoleAPI {
     private static final Logger log = LoggerFactory.getLogger(RoleAPI.class);
 
     final RoleService roleService;
-
     final RoleMapper roleMapper;
+    final AuthenticationService authenticationService;
 
-    public RoleAPI(RoleService roleService, RoleMapper roleMapper) {
+    public RoleAPI(RoleService roleService, RoleMapper roleMapper, AuthenticationService authenticationService) {
         this.roleService = roleService;
         this.roleMapper = roleMapper;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,8 +49,11 @@ public class RoleAPI {
     })
     public ResponseEntity<RoleWithIdDto> createRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                     @Valid @RequestBody RoleDto role) {
-        // todo jwt validation
         log.info("createRole ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("createRole EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         RoleWithIdDto roleWithId = roleMapper.toModel(roleService.createRole(roleMapper.toModel(role)));
         log.info("createRole EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(roleWithId);
@@ -67,8 +72,11 @@ public class RoleAPI {
     })
     public ResponseEntity<MessageDto> deleteRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                  @Valid @RequestBody RoleIdDto roleId) {
-        // todo jwt validation
         log.info("deleteRole ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("deleteRole EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         Long id = Long.valueOf(roleId.getIdRole());
         roleService.removeRole(id);
         log.info("deleteRole EXIT");
@@ -87,8 +95,11 @@ public class RoleAPI {
     })
     public ResponseEntity<?> updateRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                         @Valid @RequestBody RoleWithIdDto roleWithId) {
-        // todo jwt validation
         log.info("updateRole ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("updateRole EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         roleService.updateRole(roleMapper.toModel(roleWithId));
         log.info("updateRole EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("updateRole completed"));

@@ -2,6 +2,7 @@ package com.rso.microservice.api;
 
 import com.rso.microservice.api.dto.*;
 import com.rso.microservice.api.mapper.ProductShopHistoryMapper;
+import com.rso.microservice.service.AuthenticationService;
 import com.rso.microservice.service.ProductShopHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,13 +27,14 @@ public class ProductShopHistoryAPI {
     private static final Logger log = LoggerFactory.getLogger(ProductShopHistoryAPI.class);
 
     final ProductShopHistoryService productShopHistoryService;
-
     final ProductShopHistoryMapper productShopHistoryMapper;
+    final AuthenticationService authenticationService;
 
     public ProductShopHistoryAPI(ProductShopHistoryService productShopHistoryService,
-                                 ProductShopHistoryMapper productShopHistoryMapper) {
+                                 ProductShopHistoryMapper productShopHistoryMapper, AuthenticationService authenticationService) {
         this.productShopHistoryService = productShopHistoryService;
         this.productShopHistoryMapper = productShopHistoryMapper;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,8 +51,11 @@ public class ProductShopHistoryAPI {
     public ResponseEntity<ProductShopHistoryWithIdDto> createProductShopHistory(
             @RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
             @Valid @RequestBody ProductShopHistoryDto productShopHistory) {
-        // todo jwt validation
-        log.info("createProductShopHistory: ENTRY");
+        log.info("createProductShopHistory ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("createProductShopHistory EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         ProductShopHistoryWithIdDto productShopHistoryWithId = productShopHistoryMapper.toModel(
                 productShopHistoryService.createProductShopHistory(
                         productShopHistoryMapper.toModel(productShopHistory), productShopHistory.getIdProductShop()));
@@ -71,8 +76,11 @@ public class ProductShopHistoryAPI {
     })
     public ResponseEntity<MessageDto> deleteProductShopHistory(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                                @Valid @RequestBody ProductIdDto productId) {
-        // todo jwt validation
-        log.info("deleteProductShopHistory: ENTRY");
+        log.info("deleteProductShopHistory ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("deleteProductShopHistory EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         productShopHistoryService.removeProductShopHistoryByProductId(productId.getIdProduct());
         log.info("deleteProductShopHistory: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("deleteProductShopHistory completed"));
@@ -90,8 +98,11 @@ public class ProductShopHistoryAPI {
     })
     public ResponseEntity<?> updateProductShopHistory(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                       @Valid @RequestBody ProductShopHistoryWithIdDto productShopHistoryWithId) {
-        // todo jwt validation
-        log.info("updateProductShopHistory: ENTRY");
+        log.info("updateProductShopHistory ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("updateProductShopHistory EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         productShopHistoryService.updateProductShopHistory(productShopHistoryMapper.toModel(productShopHistoryWithId));
         log.info("updateProductShopHistory: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("updateProductShopHistory completed"));

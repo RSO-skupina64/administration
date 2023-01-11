@@ -2,6 +2,7 @@ package com.rso.microservice.api;
 
 import com.rso.microservice.api.dto.*;
 import com.rso.microservice.api.mapper.ShopMapper;
+import com.rso.microservice.service.AuthenticationService;
 import com.rso.microservice.service.ShopService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,12 +28,13 @@ public class ShopAPI {
     private static final Logger log = LoggerFactory.getLogger(ShopAPI.class);
 
     final ShopService shopService;
-
     final ShopMapper shopMapper;
+    final AuthenticationService authenticationService;
 
-    public ShopAPI(ShopService shopService, ShopMapper shopMapper) {
+    public ShopAPI(ShopService shopService, ShopMapper shopMapper, AuthenticationService authenticationService) {
         this.shopService = shopService;
         this.shopMapper = shopMapper;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,8 +50,11 @@ public class ShopAPI {
     })
     public ResponseEntity<ShopWithIdDto> createShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                     @Valid @RequestBody ShopDto shop) {
-        // todo jwt validation
         log.info("createShop ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("createShop EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         ShopWithIdDto shopWithId = shopMapper.toModelShopWithIdDto(shopService.createShop(shopMapper.toModel(shop)));
         log.info("createShop EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(shopWithId);
@@ -68,8 +73,11 @@ public class ShopAPI {
     })
     public ResponseEntity<MessageDto> deleteShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                  @Valid @RequestBody ShopIdDto shopId) {
-        // todo jwt validation
         log.info("deleteShop ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("deleteShop EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         Long id = Long.parseLong(shopId.getIdShop());
         shopService.removeShop(id);
         log.info("deleteShop EXIT");
@@ -88,8 +96,11 @@ public class ShopAPI {
     })
     public ResponseEntity<?> updateShop(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                         @Valid @RequestBody ShopWithIdDto shopWithId) {
-        // todo jwt validation
         log.info("updateShop ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("updateShop EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         shopService.updateShop(shopMapper.toModel(shopWithId));
         log.info("updateShop EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("updateShop completed"));

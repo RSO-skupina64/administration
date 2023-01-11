@@ -5,6 +5,7 @@ import com.rso.microservice.api.dto.MessageDto;
 import com.rso.microservice.api.dto.UserDto;
 import com.rso.microservice.api.dto.UserIdDto;
 import com.rso.microservice.api.mapper.UserMapper;
+import com.rso.microservice.service.AuthenticationService;
 import com.rso.microservice.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,12 +30,13 @@ public class UserAPI {
     private static final Logger log = LoggerFactory.getLogger(UserAPI.class);
 
     final UserService userService;
-
     final UserMapper userMapper;
+    final AuthenticationService authenticationService;
 
-    public UserAPI(UserService userService, UserMapper userMapper) {
+    public UserAPI(UserService userService, UserMapper userMapper, AuthenticationService authenticationService) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.authenticationService = authenticationService;
     }
 
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,8 +52,11 @@ public class UserAPI {
     })
     public ResponseEntity<MessageDto> deleteUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                  @Valid @RequestBody UserIdDto userId) {
-        // todo jwt validation
         log.info("deleteUser ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("deleteUser EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         Long id = Long.parseLong(userId.getIdUser());
         userService.removeUser(id);
         log.info("deleteUser EXIT");
@@ -70,10 +75,12 @@ public class UserAPI {
     })
     public ResponseEntity<?> updateUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                         @Valid @RequestBody UserDto user) {
-        // todo jwt validation
         log.info("updateUser ENTRY");
-        // todo userId from jwt token
-        Long userId = 1L;
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("updateUser EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
+        Long userId = authenticationService.getUserProfileWrapper(jwt);
         userService.updateUser(userId, userMapper.toModel(user));
         log.info("updateUser EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("updateUser completed"));

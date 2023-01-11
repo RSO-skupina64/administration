@@ -2,6 +2,7 @@ package com.rso.microservice.api;
 
 import com.rso.microservice.api.dto.*;
 import com.rso.microservice.api.mapper.ProductTypeMapper;
+import com.rso.microservice.service.AuthenticationService;
 import com.rso.microservice.service.ProductTypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,12 +27,13 @@ public class ProductTypeAPI {
     private static final Logger log = LoggerFactory.getLogger(ProductTypeAPI.class);
 
     final ProductTypeService productTypeService;
-
     final ProductTypeMapper productTypeMapper;
+    final AuthenticationService authenticationService;
 
-    public ProductTypeAPI(ProductTypeService productTypeService, ProductTypeMapper productTypeMapper) {
+    public ProductTypeAPI(ProductTypeService productTypeService, ProductTypeMapper productTypeMapper, AuthenticationService authenticationService) {
         this.productTypeService = productTypeService;
         this.productTypeMapper = productTypeMapper;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,8 +49,11 @@ public class ProductTypeAPI {
     })
     public ResponseEntity<ProductTypeWithIdDto> createProductType(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                                   @Valid @RequestBody ProductTypeDto productType) {
-        // todo jwt validation
-        log.info("createProductType: ENTRY");
+        log.info("createProductType ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("createProductType EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         ProductTypeWithIdDto productTypeWithId = productTypeMapper.toModel(
                 productTypeService.createProductType(productTypeMapper.toModel(productType)));
         log.info("createProductType: EXIT");
@@ -68,8 +73,11 @@ public class ProductTypeAPI {
     })
     public ResponseEntity<MessageDto> deleteProductType(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                         @Valid @RequestBody ProductTypeIdDto productTypeId) {
-        // todo jwt validation
-        log.info("deleteProductType: ENTRY");
+        log.info("deleteProductType ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("deleteProductType EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         Long id = Long.parseLong(productTypeId.getIdProductType());
         productTypeService.removeProductType(id);
         log.info("deleteProductType: EXIT");
@@ -88,8 +96,11 @@ public class ProductTypeAPI {
     })
     public ResponseEntity<?> updateProductType(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                                @Valid @RequestBody ProductTypeWithIdDto productTypeWithId) {
-        // todo jwt validation
-        log.info("updateProductType: ENTRY");
+        log.info("updateProductType ENTRY");
+        if (!authenticationService.checkUserRoleWrapper(jwt, "Administrator")) {
+            log.info("updateProductType EXIT");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
         productTypeService.updateProductType(productTypeMapper.toModel(productTypeWithId));
         log.info("updateProductType: EXIT");
         return ResponseEntity.status(HttpStatus.OK).body(new MessageDto("updateProductType completed"));
