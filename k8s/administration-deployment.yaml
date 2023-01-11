@@ -7,13 +7,17 @@ spec:
   selector:
     matchLabels:
       app: administration
+      hystrix.cluster: default
+      hystrix.enabled: 'true'
   template:
     metadata:
       labels:
         app: administration
+        hystrix.cluster: default
+        hystrix.enabled: 'true'
     spec:
       containers:
-        - image: as9721/administration:2023-01-09-21-56-26
+        - image: as9721/administration:2023-01-11-06-19-08
           name: administration
           ports:
             - containerPort: 8080
